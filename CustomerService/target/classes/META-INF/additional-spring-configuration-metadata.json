@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "tbs.cache.redis.ip",
+    "type": "java.lang.String",
+    "description": "A description for 'tbs.cache.redis.ip'"
+  },
+  {
+    "name": "tbs.cache.redis.ip",
+    "type": "java.lang.String",
+    "description": "A description for 'tbs.cache.redis.ip'"
+  }
+]}
