@@ -35,14 +35,14 @@ public class CartController {
 	 * This method is used to Save Multiple All the details.
 	 */
 	
-	@PostMapping("/categories")
+	@PostMapping("/saveCategories")
 	public ResponseEntity<Iterable<Category>> createCategory(@RequestBody List<Category> categoryList)
 			throws Exception {
 		Iterable<Category> createdCategory = this.productService.saveCategory(categoryList);
 		return ResponseEntity.ok().body(createdCategory); //createdPolicy that is return to createPolicy
 	}
 	
-	@PostMapping("/products")
+	@PostMapping("/saveProducts")
 	public ResponseEntity<Iterable<Product>> createProduct(@RequestBody List<Product> productList)
 			throws Exception {
 		Iterable<Product> createdProduct = this.productService.saveProduct(productList);
@@ -53,15 +53,41 @@ public class CartController {
 	 * This method is used to get All the details.
 	 */
 	
-	@GetMapping("/getAllCategories")
-	public @ResponseBody Iterable<Category> getAllCategorieList() throws Exception {
-		return productService.getAllCategories(); 
-	}
+//	@GetMapping("/getAllCategories")
+//	public @ResponseBody Iterable<Category> getAllCategorieList() throws Exception {
+//		return productService.getAllCategories(); 
+//	}
+//	
+//	@GetMapping("/getAllProduct")
+//	public @ResponseBody Iterable<Product> getAllProductsList() throws Exception {
+//		return productService.getAllProducts(); 
+//	}
 	
-	@GetMapping("/getAllProduct")
-	public @ResponseBody Iterable<Product> getAllProductsList() throws Exception {
-		return productService.getAllProducts(); 
-	}
+	/*
+	 * This method is used to get All the details By Pagination.
+	 */
+	
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProduct(
+                        @RequestParam(defaultValue = "0") Integer pageNo,
+                        @RequestParam(defaultValue = "10") Integer pageSize,
+                        @RequestParam(defaultValue = "id") String sortBy)
+    {
+        List<Product> list = productService.getAllProducts(pageNo, pageSize, sortBy);
+
+        return new ResponseEntity<List<Product>>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/categories")
+    public ResponseEntity<List<Category>> getAllCategory(
+                        @RequestParam(defaultValue = "0") Integer pageNo,
+                        @RequestParam(defaultValue = "10") Integer pageSize,
+                        @RequestParam(defaultValue = "id") String sortBy)
+    {
+        List<Category> prodList = productService.getAllCategories(pageNo, pageSize, sortBy);
+
+        return new ResponseEntity<List<Category>>(prodList, new HttpHeaders(), HttpStatus.OK);
+    }
 	
 	/*
 	 * This method is used to get the details by using id.
@@ -126,31 +152,9 @@ public class CartController {
 		}
 	}
 	
-	/*
-	 * This method is used to get All the details By Pagination.
-	 */
-	
-    @GetMapping("/getAllProductPaging")
-    public ResponseEntity<List<Product>> getAllProduct(
-                        @RequestParam(defaultValue = "0") Integer pageNo,
-                        @RequestParam(defaultValue = "10") Integer pageSize,
-                        @RequestParam(defaultValue = "id") String sortBy)
-    {
-        List<Product> list = productService.getAllProducts(pageNo, pageSize, sortBy);
 
-        return new ResponseEntity<List<Product>>(list, new HttpHeaders(), HttpStatus.OK);
-    }
     
-    @GetMapping("/getAllCategoryPaging")
-    public ResponseEntity<List<Category>> getAllCategory(
-                        @RequestParam(defaultValue = "0") Integer pageNo,
-                        @RequestParam(defaultValue = "10") Integer pageSize,
-                        @RequestParam(defaultValue = "id") String sortBy)
-    {
-        List<Category> prodList = productService.getAllCategories(pageNo, pageSize, sortBy);
-
-        return new ResponseEntity<List<Category>>(prodList, new HttpHeaders(), HttpStatus.OK);
-    }
+    
 	
 
 
